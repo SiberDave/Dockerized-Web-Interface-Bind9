@@ -3,7 +3,7 @@
 FROM ubuntu:20.04
 
 LABEL maintainer="dave.cloud.cyber@gmail.com"
-LABEL description="Docker Container for Bind9 with setup RPZ and the backend for bind9"
+LABEL description="Docker Container for Bind9 with setup RPZ and the backend of Web Interface Bind9"
 
 RUN apt-get update \
   && apt-get install -y software-properties-common curl nano cron \ 
