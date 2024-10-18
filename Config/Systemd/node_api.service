@@ -1,0 +1,12 @@
+[Unit]
+Description=backend_api
+After=network.target
+
+[Service]
+Type=simple
+User=root
+ExecStart=/usr/bin/node /home/back_api/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

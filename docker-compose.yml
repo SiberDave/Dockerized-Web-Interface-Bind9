@@ -1,0 +1,46 @@
+# docker-compose -p "bind9-interface" up -d
+version: "3.7"
+services:
+  dns_backend:
+    container_name: interface-bind9-backend
+    restart: unless-stopped
+    privileged: true
+    network_mode: "host"
+    build:
+      context: .
+      dockerfile: Dockerfile.backend
+    extra_hosts:
+      - "db:172.25.5.1"
+  frontend:
+    container_name: interface-bind9-frontend
+    restart: unless-stopped
+    networks:
+      internal:
+        ipv4_address: 172.25.5.2
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    ports:
+      - "8080:80"
+  db:
+    container_name: mongodb
+    restart: unless-stopped
+    image: mongo:8.0.1
+    networks:
+      internal:
+        ipv4_address: 172.25.5.1
+    volumes:
+      - mongo_data:/data/db
+      - ./Backend/js/initiate.js:/docker-entrypoint-initdb.d/initiate.js
+    environment:
+      - MONGO_INITDB_DATABASE=web-interface-bind9
+    expose:
+      - "27017"
+volumes:
+  mongo_data:
+networks:
+  internal:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.25.0.0/16
