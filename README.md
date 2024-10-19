@@ -28,15 +28,13 @@ Bind9 RPZ monitor made with
 
 1. On Dockerfile.backend on line 38, Change the ip 127.0.0.1 to your public facing ip / ip address you want to use as DoH dns server.
 
-2. Run `docker-compose build --no-cache` to build the image.
+2. On Dockerfile.frontend on line 15, Change the localhost to Backend ip which reachable from public or your device.
 
-3. Run `docker-compose -p "bind9-interface" up -d`.
+3. Run `docker-compose build --no-cache` to build the image.
 
-4. Run `docker exec -it interface-bind9-backend bash` to go into inside of container.
+4. Run `docker-compose -p "bind9-interface" up -d`.
 
-5. Run `/home/webScript/run_service.sh` to run service of backend app and bind9.
-
-6. Add ip to the Allowed Client menu on website to allow device to connect to dns server.
+5. Add ip to the Allowed Client menu on website to allow device to connect to dns server.
 
 ## Troubleshoot
 Q: Issue on network <br/>

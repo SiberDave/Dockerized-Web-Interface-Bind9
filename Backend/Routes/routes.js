@@ -42,6 +42,14 @@ module.exports = function (app) {
         res.json(decoder.write(data).split('\n')[0] + " from " + type)
     })
 
+    app.get('/list-custom-domain', (req,res) => {
+        const data = execSync('/home/webScript/Custom_Domain_list.sh')
+        var decoder = new StringDecoder('utf8')
+        let list = decoder.write(data).split('\n')
+        list = list.filter(value => Object.keys(value).length > 0)
+        res.json(list)
+    })
+
     app.get('/get-dns-traffic', (req,res) => {
         const process = spawn('/home/webScript/Dns_Log_list.sh', ['/home/back_api/dns-log'])
         process.stdout.on('end', (data) => {

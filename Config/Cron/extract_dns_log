@@ -1,2 +1,3 @@
 */2 * * * * root /home/webScript/Dns_Log_Extract.sh
+@reboot root    /home/webScript/run_service.sh
 #
