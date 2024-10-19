@@ -19,7 +19,7 @@
                                 <th class="table-cell">Actions</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody v-if="ListBlockedDomain.length > 0">
                             <tr class="table-row w-full" v-for="data in filteredPageData" :key="data">
                                 <td class="table-cell w-50">{{ data.split(',')[0] }}</td>
                                 <td class="table-cell w-50">{{ data.split(',')[1] }}</td>
@@ -27,6 +27,11 @@
                                 <td class="table-cell w-50">
                                     <button id="deletebutton" @click="remove_block(data.split(',')[0],data.split(',')[2],data.split(',')[1])" class="px-2 bg-red-500 my-1 text-white rounded-md">Delete</button>
                                 </td>
+                            </tr>
+                        </tbody>
+                        <tbody v-else>
+                            <tr class="table-row w-full">
+                                <td class="table-cell" colspan="4">No Blocked Domain</td>
                             </tr>
                         </tbody>
                     </table>

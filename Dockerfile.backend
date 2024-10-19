@@ -9,11 +9,6 @@ RUN apt-get update \
   && apt-get install -y software-properties-common curl nano cron \ 
   && add-apt-repository -y ppa:isc/bind-dev
 
-RUN curl -fsSL https://www.mongodb.org/static/pgp/server-7.0.asc | \ 
-  gpg --yes -o /usr/share/keyrings/mongodb-server-7.0.gpg --dearmor | \ 
-  echo -n "deb [ arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-7.0.gpg ] https://repo.mongodb.org/apt/ubuntu focal/mongodb-org/7.0 multiverse" | \
-  tee /etc/apt/sources.list.d/mongodb-org-7.0.list
-
 RUN curl -sL https://deb.nodesource.com/setup_21.x -o /tmp/nodesource_setup.sh && bash /tmp/nodesource_setup.sh
 
 RUN apt-get update \
@@ -35,11 +30,11 @@ COPY ./Config/Cron/extract_dns_log /etc/cron.d/extract_dns_log
 
 RUN chmod 600 /etc/cron.d/extract_dns_log
 
-RUN /home/webScript/Generate_DOH_SSL.sh
+RUN /home/webScript/Generate_DOH_SSL.sh 127.0.0.1
 
 RUN sed -i '/\/var\/cache\/bind\/ rw,/a \ \ \/var/log/bind/** rw,' "/etc/apparmor.d/usr.sbin.named" \ 
   && sed -i '/\/var\/cache\/bind\/ rw,/a \ \ \/var/log/bind/ rw,' "/etc/apparmor.d/usr.sbin.named" \
-  && sed -i -e "s/listen_addresses = .*/listen_addresses = \['127.0.0.1:5353'\]/" "/etc/dnscrypt-proxy/dnscrypt-proxy.toml" \
+  && sed -i -e "s/listen_addresses = .*/listen_addresses = \['127.0.0.1:10053'\]/" "/etc/dnscrypt-proxy/dnscrypt-proxy.toml" \
   && sed -i -e "s/server_names = .*/server_names = \['cloudflare'\]/" "/etc/dnscrypt-proxy/dnscrypt-proxy.toml"
 
 RUN cp /etc/bind/db.empty /etc/bind/db.ads.rpz \ 

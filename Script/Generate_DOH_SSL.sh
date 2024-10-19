@@ -4,7 +4,8 @@ if [ ! -d  /var/cache/bind/ssl ]; then
     mkdir -p /var/cache/bind/ssl
 fi
 
-commonname=$(hostname -I | awk '{print $1}')
+commonname=$1
+# commonname = $(hostname -I | awk '{print $1}')
 
 cd /var/cache/bind/ssl
 

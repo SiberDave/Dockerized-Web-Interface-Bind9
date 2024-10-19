@@ -27,7 +27,7 @@
                         </tbody>
                         <tbody v-else>
                             <tr class="table-row w-full">
-                                <td class="table-cell" colspan="2">No Blocked Client</td>
+                                <td class="table-cell" colspan="2">No Allowed Client</td>
                             </tr>
                         </tbody>
                     </table>

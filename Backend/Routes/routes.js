@@ -202,17 +202,21 @@ module.exports = function (app) {
             let firstdate = null
             let seconddate = moment(new Date())
 
-            if (time == "60m"){
-                firstdate = moment(new Date()).subtract(1, 'hours').format()
-            }
-            else if (time == "1d"){
-                firstdate = moment(new Date()).subtract(1, 'days').format()
-            }
-            else if (time == "1m"){
-                firstdate = moment(new Date()).subtract(1, 'months').format()
-            }
-            else if (time == "1y"){
-                firstdate = moment(new Date()).subtract(1, 'years').format()
+            switch (time) {
+                case "60m":
+                    firstdate = moment(new Date()).subtract(1, 'hours').format()
+                    break;
+                case "1d":
+                    firstdate = moment(new Date()).subtract(1, 'days').format()
+                    break;
+                case "1m":
+                    firstdate = moment(new Date()).subtract(1, 'months').format()
+                    break;
+                case "1y":
+                    firstdate = moment(new Date()).subtract(1, 'years').format()
+                    break;
+                default:
+                    break;
             }
 
             let domaincount = []
@@ -244,17 +248,21 @@ module.exports = function (app) {
             let firstdate = null
             let seconddate = moment(new Date())
 
-            if (time == "60m"){
-                firstdate = moment(new Date()).subtract(1, 'hours').format()
-            }
-            else if (time == "1d"){
-                firstdate = moment(new Date()).subtract(1, 'days').format()
-            }
-            else if (time == "1m"){
-                firstdate = moment(new Date()).subtract(1, 'months').format()
-            }
-            else if (time == "1y"){
-                firstdate = moment(new Date()).subtract(1, 'years').format()
+            switch (time) {
+                case "60m":
+                    firstdate = moment(new Date()).subtract(1, 'hours').format()
+                    break;
+                case "1d":
+                    firstdate = moment(new Date()).subtract(1, 'days').format()
+                    break;
+                case "1m":
+                    firstdate = moment(new Date()).subtract(1, 'months').format()
+                    break;
+                case "1y":
+                    firstdate = moment(new Date()).subtract(1, 'years').format()
+                    break;
+                default:
+                    break;
             }
 
             let clientcount = []
