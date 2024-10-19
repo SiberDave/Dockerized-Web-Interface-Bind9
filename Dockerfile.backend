@@ -12,7 +12,7 @@ RUN apt-get update \
 RUN curl -sL https://deb.nodesource.com/setup_21.x -o /tmp/nodesource_setup.sh && bash /tmp/nodesource_setup.sh
 
 RUN apt-get update \
-  && apt-get install -y bind9 gnupg jq nginx dnscrypt-proxy nodejs
+  && apt-get install -y bind9 bind9-utils gnupg jq nginx dnscrypt-proxy nodejs
 
 RUN mkdir -p /home/back_api /home/webScript /var/log/bind \ 
   && touch /home/webScript/dns-log \ 
@@ -39,6 +39,7 @@ RUN sed -i '/\/var\/cache\/bind\/ rw,/a \ \ \/var/log/bind/** rw,' "/etc/apparmo
 
 RUN cp /etc/bind/db.empty /etc/bind/db.ads.rpz \ 
   | cp /etc/bind/db.empty /etc/bind/db.blocked.rpz \
+  | cp /etc/bind/db.empty /etc/bind/db.custom.dns \
   | cp /home/back_api/example.env /home/back_api/.env \
   && sed -i -e "s|LOG_PATH='.*'|LOG_PATH='/home/back_api/dns-log'|" "/home/back_api/.env"
 

@@ -70,6 +70,12 @@ zone "blocked.rpz.zone" {
 	allow-transfer { none; };
 };
 
+zone "custom.zone" {
+    type master;
+    file "/etc/bind/db.custom.dns";
+    allow-query { any; };
+	allow-transfer { none; };
+};
 
 logging {
     channel default_log {
