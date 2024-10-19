@@ -12,6 +12,8 @@ import AllowedClientView from "../views/AllowedClientView.vue"
 
 import loginForm from "../views/LoginView.vue"
 
+import customdomainview from '../views/CustomDomainView.vue'
+
 const routes = [
   {
     path: '/',
@@ -29,6 +31,12 @@ const routes = [
     path: '/domain-block',
     name: 'Domain Block',
     component: domainblockview,
+    meta: { requestLogin: true }
+  },
+  {
+    path: '/custom-domain',
+    name: 'Custom Domain',
+    component: customdomainview,
     meta: { requestLogin: true }
   },
   // {

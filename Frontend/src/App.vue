@@ -15,6 +15,9 @@
           <router-link to="/dns-log" :active-class="'bg-gray-100 text-black'" class="link">Dns Log</router-link>
         </div>
         <div class="w-full sidear-menu">
+          <router-link to="/custom-domain" :active-class="'bg-gray-100 text-black'" class="link">Custom Domain</router-link>
+        </div>
+        <div class="w-full sidear-menu">
           <router-link to="/domain-block" :active-class="'bg-gray-100 text-black'" class="link">Domain Block</router-link>
         </div>
         <div class="w-full sidebar-menu">
