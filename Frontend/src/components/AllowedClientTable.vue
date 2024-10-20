@@ -24,6 +24,9 @@
                                     <button id="deletebutton" @click="remove_block(data)" class="px-2 bg-red-500 my-1 text-white rounded-md">Delete</button>
                                 </td>
                             </tr>
+                            <tr class="table-row w-full" v-for="data in (totalitem - filteredPageData.length)" :key="data">
+                                <td class="table-cell py-1" colspan="4">Empty</td>
+                            </tr>
                         </tbody>
                         <tbody v-else>
                             <tr class="table-row w-full">

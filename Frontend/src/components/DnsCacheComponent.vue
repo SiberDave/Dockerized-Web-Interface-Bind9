@@ -7,10 +7,14 @@
                     <h1 class="text-center">Cache Size : {{ cacheSize }}</h1>
                 </div>
                 <div>
-                    <div class="grid grid-cols-4 p-5">
-                        <div><button @click="fetchData()" class="border py-2 px-7 bg-purple-200 rounded-md">Refresh</button></div>
+                    <div class="grid grid-cols-6 p-5">
+                        <div class="flex flex-row justify-center items-center">
+                            <button @click="fetchData()" style="width: 45px; height: 45px;" class="bg-purple-200 rounded-md">
+                                <img src="../assets/refresh.png" class="w-full h-full" alt="">
+                            </button>
+                        </div>
                         <div class="text-xl">Search :</div>
-                        <div><input class="w-9/12 border border-black appearance-none" type="text" v-model="searchQuery"></div>
+                        <div class="col-span-3"><input class="w-9/12 h-3/4 border border-black appearance-none" type="text" v-model="searchQuery"></div>
                         <div><button @click="flushCache()" class="border py-2 px-7 bg-red-100 rounded-md">Flush Cache</button></div>
                     </div>
                 </div>
@@ -30,6 +34,9 @@
                                 <td class="table-cell w-50 px-2">{{ data.ttl }}</td>
                                 <td class="table-cell w-50 px-2">{{ data.type }}</td>
                                 <td class="table-cell w-50 px-2">{{ data.address }}</td>
+                            </tr>
+                            <tr class="table-row w-full" v-for="data in (totalitem - filteredPageData.length)" :key="data">
+                                <td class="table-cell" colspan="4">Empty</td>
                             </tr>
                         </tbody>
                         <tbody v-else>

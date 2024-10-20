@@ -7,23 +7,31 @@
             </div>
             <div class="flex-row w-full" v-if="!loading">
                 <div class="w-full flex justify-center">
-                    <div class="w-4/5 h-min grid grid-cols-8 py-5">
-                        <div class="flex flex-col justify-center items-center col-span-4">
+                    <div class="w-4/5 h-min grid grid-cols-10 py-5">
+                        <div class="flex flex-col justify-center items-center col-span-2">
                             <Multiselect class="w-full" v-model="selectedcat" :options="category" />
                         </div>
-                        <div class="flex flex-col justify-center items-end col-span-4">
-                            <button @click="refreshlist()" class="h-full w-3/4 bg-purple-200 rounded-md">Refresh</button>
-                        </div>
-                        <div class="flex flex-col justify-center items-start col-span-3 mt-3">
-                            <input class="w-4/5 h-full text-l rounded-md" placeholder="Domain Search" name="query" type="text" v-model="searchQuery">
-                        </div>
-                        <div class="w-full flex flex-col justify-center items-center col-span-3 mt-3">
-                            <div class="w-full" id="daterange">
-                                <div class="w-5/6"><VueDatePicker v-model="date" range :enable-time-picker="false"/></div>
+                        <div class="w-full flex flex-col justify-center items-center col-span-3">
+                            <div class="w-full flex flex-row justify-center items-center h-full" id="daterange">
+                                <div class="w-4/5"><VueDatePicker v-model="date" range :enable-time-picker="false"/></div>
                             </div>
                         </div>
-                        <div class="flex flex-col justify-center items-center col-span-2 mt-3">
-                            <button @click="checkval()" style="margin-left: calc(5%);" class="w-full h-full bg-purple-200 rounded-md">Search</button>
+                        <div class="flex flex-col justify-center items-start col-span-3">
+                            <input class="w-full h-full text-l rounded-md" placeholder="Domain Search" name="query" type="text" v-model="searchQuery">
+                        </div>
+                        <div class="flex flex-col justify-center items-center col-span-1">
+                            <div class="flex flex-row justify-center items-center">
+                                <button @click="checkval()" style="width: 45px; height: 45px;" class="bg-purple-200 rounded-md">
+                                    <img src="../assets/magnifying-glass.png" class="w-full h-full p-1" alt="">
+                                </button>
+                            </div>
+                        </div>
+                        <div class="flex flex-col justify-center items-center col-span-1">
+                            <div class="flex flex-row justify-center items-center">
+                                <button @click="refreshlist()" style="width: 45px; height: 45px;" class="bg-purple-200 rounded-md">
+                                    <img src="../assets/refresh.png" class="w-full h-full" alt="">
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,6 +66,9 @@
                                         </div>
                                     </div>
                                 </td>
+                            </tr>
+                            <tr class="table-row w-full" v-for="data in (totalitem - tableData.length)" :key="data">
+                                <td class="table-cell p-0.5 py-4" colspan="8">Empty</td>
                             </tr>
                         </tbody>
                         <tbody v-else>
