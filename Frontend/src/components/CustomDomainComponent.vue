@@ -135,7 +135,7 @@
                 }
                 else{
                     const filtered = this.ListCustomDomain.filter((data) => {
-                        console.log(data)
+                        // console.log(data)
                         return (
                             data.toLowerCase().includes(this.searchQuery.toLowerCase())
                         );

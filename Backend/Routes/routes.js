@@ -462,7 +462,7 @@ module.exports = function (app) {
 
                 let pass = btoa(btoa(password))
 
-                console.log(cursor[0].password + " " + pass)
+                // console.log(cursor[0].password + " " + pass)
 
                 if (cursor[0].password == pass){
                     code = 200

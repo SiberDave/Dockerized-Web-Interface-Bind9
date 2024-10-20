@@ -45,7 +45,7 @@ async function getallpage(client,page,query,search,datestart,dateend) {
         querys["date"] = datequery
     }
 
-    console.log(querys)
+    // console.log(querys)
 
     const cursor = await log.find(querys,{sort,skip,limit})
 

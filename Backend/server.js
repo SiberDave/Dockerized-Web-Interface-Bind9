@@ -14,5 +14,5 @@ app.use(bodyParser.urlencoded({ extended: true }))
 require('./Routes/routes') (app);
 
 server.listen(3000, () => {
-    console.log("Bind DNS Backend listend on port 3000");
+    console.log("Bind DNS Backend listen on port 3000");
 })

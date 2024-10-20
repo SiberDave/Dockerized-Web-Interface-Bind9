@@ -155,7 +155,7 @@
                 }
                 const params = new URLSearchParams(data)
                 let response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-count/${this.selectedcat}?${params.toString()}`)
-                console.log(response.data.count)
+                // console.log(response.data.count)
                 this.totalpages = Math.ceil(response.data.count / this.totalitem)
             },
             async fetchData() {

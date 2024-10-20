@@ -135,7 +135,7 @@
                 }
                 else{
                     const filtered = this.ListBlockedDomain.filter((data) => {
-                        console.log(data)
+                        // console.log(data)
                         return (
                             data.toLowerCase().includes(this.searchQuery.toLowerCase())
                         );
