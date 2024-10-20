@@ -34,7 +34,7 @@ options {
 	allow-recursion { allowed; };
 	deny-answer-addresses { local-address; };
 	forwarders {
-	    127.0.0.1 port 10053;
+	    172.25.5.3 port 5053;
 	};
 	forward only;
 

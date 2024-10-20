@@ -15,6 +15,19 @@ services:
       - db
     extra_hosts:
       - "db:172.25.5.1"
+  dnscrypt-proxy:
+    container_name: dnscrypt-proxy
+    restart: unless-stopped
+    image: klutchell/dnscrypt-proxy
+    volumes:
+      - ${PWD}/Config/Dnscrypt-proxy/dnscrypt-proxy.toml:/config/dnscrypt-proxy.toml
+    dns:
+      - 127.0.0.1
+    expose:
+      - "5053/udp"
+    networks:
+      internal:
+        ipv4_address: 172.25.5.3
   frontend:
     container_name: interface-bind9-frontend
     restart: unless-stopped
