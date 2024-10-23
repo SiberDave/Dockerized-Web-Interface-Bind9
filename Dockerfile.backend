@@ -12,7 +12,7 @@ RUN apt-get update \
 RUN curl -sL https://deb.nodesource.com/setup_21.x -o /tmp/nodesource_setup.sh && bash /tmp/nodesource_setup.sh
 
 RUN apt-get update \
-  && apt-get install -y bind9 bind9-utils gnupg jq nginx nodejs
+  && apt-get install -y bind9 bind9-utils gnupg jq nodejs
 
 RUN mkdir -p /home/back_api /home/webScript /var/log/bind \ 
   && touch /home/webScript/dns-log \ 

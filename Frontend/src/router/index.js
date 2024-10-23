@@ -70,6 +70,11 @@ const routes = [
     name: 'Login',
     component: loginForm,
     meta: { islogin: true }
+  },
+  {
+    path: '/logout',
+    name: 'Logout',
+    meta: { islogin: true }
   }
 ]
 
@@ -81,10 +86,14 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
   const userCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('user='))
   if (to.meta.requestLogin && !userCookie){
-    next('/login')
+    window.location.href = "/login"
   }
   else if (to.meta.islogin && userCookie){
     next(from.path)
+    if (to.path == "/logout"){
+      document.cookie = `${userCookie};max-age=0`
+      window.location.href = "/login"
+    }
   }
   else{
     next()

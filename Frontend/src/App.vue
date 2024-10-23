@@ -23,6 +23,9 @@
         <div class="w-full sidebar-menu">
           <router-link to="/dns-cache" :active-class="'bg-gray-100 text-black'" class="link">DNS Cache</router-link>
         </div>
+        <div class="w-full sidebar-menu">
+          <router-link to="/logout" :active-class="'bg-gray-100 text-black'" class="link">Logout</router-link>
+        </div>
       </div>
       <div class="col-span-5">
         <router-view class="pt-5"/>
