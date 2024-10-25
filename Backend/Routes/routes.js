@@ -131,6 +131,16 @@ module.exports = function (app) {
                 let datas = chunk.split('\n')
             
                 datas = datas.filter(data => data.length > 0)
+
+                let data = execSync('/home/webScript/list_custom_domain.sh')
+                var decoder = new StringDecoder('utf8')
+                let list_custom = decoder.write(data).split('\n')
+                list_custom = list_custom.filter(value => Object.keys(value).length > 0)
+
+                data = execSync('/home/webScript/list_blocked_domain.sh')
+                let list_blocked = decoder.write(data).split('\n')
+                list_blocked = list_blocked.filter(value => Object.keys(value).length > 0)
+                list_blocked = [...new Set(list_blocked)]
             
                 for (const data of datas){
                     let array_values = data.split(' ')
@@ -161,7 +171,7 @@ module.exports = function (app) {
                         record = temp[1].toString()
                         message = data.split(":")[5].toString()
                     }
-            
+
                     let log = {
                         type: type,
                         date: new Date(datetimes),
@@ -170,7 +180,12 @@ module.exports = function (app) {
                         dns_type: record,
                         note: message
                     }
-                    dump.push(log)
+
+                    if (type == "rpz" && list_custom.includes(query)){}
+                    else if(type == "queries" && list_blocked.includes(query)){}
+                    else{
+                        dump.push(log)
+                    }
                 }
             })
 
