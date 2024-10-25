@@ -29,7 +29,7 @@
                                 </td>
                             </tr>
                             <tr class="table-row w-full" v-for="data in (totalitem - filteredPageData.length)" :key="data">
-                                <td class="table-cell py-1" colspan="4">Empty</td>
+                                <td class="table-cell py-1" colspan="4">&nbsp;</td>
                             </tr>
                         </tbody>
                         <tbody v-else>

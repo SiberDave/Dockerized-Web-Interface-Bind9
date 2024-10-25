@@ -68,7 +68,7 @@
                                 </td>
                             </tr>
                             <tr class="table-row w-full" v-for="data in (totalitem - tableData.length)" :key="data">
-                                <td class="table-cell p-0.5 py-4" colspan="8">Empty</td>
+                                <td class="table-cell p-0.5 py-4" colspan="8">&nbsp;</td>
                             </tr>
                         </tbody>
                         <tbody v-else>

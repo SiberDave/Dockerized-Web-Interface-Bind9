@@ -36,7 +36,7 @@
                                 <td class="table-cell w-50 px-2">{{ data.address }}</td>
                             </tr>
                             <tr class="table-row w-full" v-for="data in (totalitem - filteredPageData.length)" :key="data">
-                                <td class="table-cell" colspan="4">Empty</td>
+                                <td class="table-cell" colspan="4">&nbsp;</td>
                             </tr>
                         </tbody>
                         <tbody v-else>
