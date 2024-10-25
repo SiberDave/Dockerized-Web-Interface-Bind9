@@ -16,8 +16,8 @@ RUN apt-get update \
 
 RUN mkdir -p /home/back_api /home/webScript /var/log/bind \ 
   && touch /home/webScript/dns-log \ 
-  && chown -R bind:bind /var/log/bind \
-  && touch /var/log/bind/bind.stats
+  && touch /var/log/bind/bind.stats \
+  && chown -R bind:bind /var/log/bind 
 
 COPY ./Backend/. /home/back_api
 
