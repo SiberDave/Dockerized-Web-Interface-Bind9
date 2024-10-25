@@ -50,6 +50,13 @@ module.exports = function (app) {
         res.json(list)
     })
 
+    app.post('/add-custom-domain', (req,res) => {
+        var { domain, ip } = req.body;
+        const data = execSync('/home/webScript/Custom_Domain_add.sh ' + domain + ' ' + ip)
+        var decoder = new StringDecoder('utf8')
+        res.json(decoder.write(data))
+    })
+
     app.get('/get-dns-traffic', (req,res) => {
         const process = spawn('/home/webScript/Dns_Log_list.sh', ['/home/back_api/dns-log'])
         process.stdout.on('end', (data) => {
