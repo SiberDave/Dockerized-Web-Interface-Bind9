@@ -13,4 +13,4 @@ else
     echo "IP doesnt exist."
 fi
 
-rndc reload
+rndc reload > /dev/null

@@ -57,6 +57,14 @@ module.exports = function (app) {
         res.json(decoder.write(data))
     })
 
+    app.get('/delete-custom-domain/:domain' ,(req,res) => {
+        const { ip } = req.query
+        const { domain } = req.params
+        const data = execSync('/home/webScript/Custom_Domain_delete.sh ' + domain + ' ' + ip)
+        var decoder = new StringDecoder('utf8')
+        res.json(decoder.write(data))
+    })
+
     app.get('/get-dns-traffic', (req,res) => {
         const process = spawn('/home/webScript/Dns_Log_list.sh', ['/home/back_api/dns-log'])
         process.stdout.on('end', (data) => {
