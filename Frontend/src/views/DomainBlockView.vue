@@ -2,7 +2,7 @@
     <div class="w-full h-full">
       <h1 class="text-2xl font-semibold">Domain Block List</h1>
       <DomainBlockFormVue/>
-      <DomainBlockComponentVue ref="customDomainTable" />
+      <DomainBlockComponentVue ref="domainBlockTable" />
     </div>
 </template>
   
