@@ -1,6 +1,5 @@
 <template>
     <div class="w-full min-h-full">
-        <h1 class="text-2xl text-center">BIND DNS History Log</h1>
         <div class="w-full h-auto">
             <div v-if="isrefresh">
                 <h1 class="text-white text-2xl">Refreshing...</h1>
@@ -17,7 +16,7 @@
                             </div>
                         </div>
                         <div class="flex flex-col justify-center items-start col-span-3">
-                            <input class="w-full h-full text-l rounded-md" placeholder="Domain Search" name="query" type="text" v-model="searchQuery">
+                            <input class="w-full h-full text-l rounded-md px-1" placeholder="Domain Search" name="query" type="text" v-model="searchQuery">
                         </div>
                         <div class="flex flex-col justify-center items-center col-span-1">
                             <div class="flex flex-row justify-center items-center">
@@ -166,7 +165,6 @@
                 }
                 const params = new URLSearchParams(data)
                 let response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-count/${this.selectedcat}?${params.toString()}`)
-                // console.log(response.data.count)
                 this.totalpages = Math.ceil(response.data.count / this.totalitem)
             },
             async fetchData() {

@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-auto">
-      <h1 class="text-2xl">Dns Cache</h1>
+      <h1 class="text-2xl font-semibold">BIND Dns Cache</h1>
       <DnsCacheComponent/>
     </div>
 </template>

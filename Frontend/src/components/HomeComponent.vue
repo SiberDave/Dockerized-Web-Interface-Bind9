@@ -1,8 +1,8 @@
 <template>
     <div>
         <div class="w-full pb-5">
-            <h1 class="text-center text-xl">Web Interface BIND9</h1>
-            <h1 class="text-center text-xl mt-5 mb-3">Basic Stats</h1>
+            <h1 class="text-center text-4xl font-bold">Web Interface BIND9</h1>
+            <h1 class="text-center text-2xl mt-5 mb-3 font-semibold">Basic Stats</h1>
         </div>
         <div class="w-full mt-2 mb-5 flex flex-row justify-left">
             <select v-model="time" id="type" class="w-1/5 text-center ms-10">

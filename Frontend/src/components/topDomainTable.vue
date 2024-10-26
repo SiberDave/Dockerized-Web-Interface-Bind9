@@ -1,6 +1,5 @@
 <template>
     <div class="w-full h-auto snap-y snap-mandatory">
-        <h1 class="text-2xl">DNS Stats</h1>
         <div class="w-full my-1 flex flex-row justify-left">
             <select v-model="time" id="type" class="w-1/5 text-center ms-10">
                 <option value="60m">60 Minutes</option>
@@ -11,7 +10,7 @@
             </select>
         </div>
         <div class="w-full h-auto snap-center">
-            <div class="w-full">
+            <div class="w-full font-semibold">
                 <h1 v-if="time == '60m'" class="text-center py-5 text-xl text-white">Top All Domain Request Last 60 Min</h1>
                 <h1 v-else-if="time == '1d'" class="text-center py-5 text-xl text-white">Top All Domain Request Last 1 Day</h1>
                 <h1 v-else-if="time == '1m'" class="text-center py-5 text-xl text-white">Top All Domain Request Last 1 Month</h1>
@@ -25,7 +24,7 @@
             </div>
         </div>
         <div class="w-full h-auto snap-center mb-5">
-            <div class="w-full col-span-2">
+            <div class="w-full col-span-2 font-semibold">
                 <h1 v-if="time == '60m'" class="text-center py-5 text-xl text-white">Top Success Domain Request Last 60 Min</h1>
                 <h1 v-else-if="time == '1d'" class="text-center py-5 text-xl text-white">Top Success Domain Request Last 1 Day</h1>
                 <h1 v-else-if="time == '1m'" class="text-center py-5 text-xl text-white">Top Success Domain Request Last 1 Month</h1>
@@ -39,7 +38,7 @@
             </div>
         </div>
         <div class="w-full h-auto snap-center mb-5">
-            <div class="w-full col-span-2">
+            <div class="w-full col-span-2 font-semibold">
                 <h1 v-if="time == '60m'" class="text-center py-5 text-xl text-white">Top Blocked Domain Request Last 60 Min</h1>
                 <h1 v-else-if="time == '1d'" class="text-center py-5 text-xl text-white">Top Blocked Domain Request Last 1 Day</h1>
                 <h1 v-else-if="time == '1m'" class="text-center py-5 text-xl text-white">Top Blocked Domain Request Last 1 Month</h1>
@@ -53,7 +52,7 @@
             </div>
         </div>
         <div class="w-full h-auto snap-center mb-5">
-            <div class="w-full">
+            <div class="w-full font-semibold">
                 <h1 v-if="time == '60m'" class="text-center py-5 text-xl text-white">Top Failed Domain Request Last 60 Min</h1>
                 <h1 v-else-if="time == '1d'" class="text-center py-5 text-xl text-white">Top Failed Domain Request Last 1 Day</h1>
                 <h1 v-else-if="time == '1m'" class="text-center py-5 text-xl text-white">Top Failed Domain Request Last 1 Month</h1>
@@ -96,21 +95,22 @@
             }
         },
         methods: {
+            async fetchQuery(type){
+                let response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-top-query/${type}/${this.time}`)
+                return response.data
+            },
             async getTopDomain(){
-                let response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-top-query/all/${this.time}`)
-                this.all_domain = response.data
-                response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-top-query/queries/${this.time}`)
-                this.success_domain = response.data
-                response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-top-query/rpz/${this.time}`)
-                this.blocked_domain = response.data
-                response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/get-top-query/query-errors/${this.time}`)
-                this.failed_domain = response.data
+                this.all_domain = await this.fetchQuery('all')
+                this.success_domain = await this.fetchQuery('queries')
+                this.blocked_domain = await this.fetchQuery('rpz')
+                this.failed_domain = await this.fetchQuery('query-errors')
             },
             async generate_chart(id,datalist){
                 const data = datalist
+                let element = document.getElementById(id)
 
                 return new Chart(
-                    document.getElementById(id),
+                    element,
                     {
                         type:'pie',
                         data: {
@@ -161,28 +161,57 @@
                 await this.getTopDomain()
 
                 try {
-                    all_domain_graph = await this.generate_chart("all_domain_stats",this.all_domain)
-                    success_domain_graph = await this.generate_chart("success_domain_stats",this.success_domain)
-                    blocked_domain_graph = await this.generate_chart("blocked_domain_stats",this.blocked_domain)
-                    failed_domain_graph = await this.generate_chart("failed_domain_stats",this.failed_domain)
+                    if (this.all_domain.length > 0) all_domain_graph = await this.generate_chart("all_domain_stats",this.all_domain)
+                    if (this.success_domain.length > 0) success_domain_graph = await this.generate_chart("success_domain_stats",this.success_domain)
+                    if (this.blocked_domain.length > 0) blocked_domain_graph = await this.generate_chart("blocked_domain_stats",this.blocked_domain)
+                    if (this.failed_domain.length > 0) failed_domain_graph = await this.generate_chart("failed_domain_stats",this.failed_domain)
                 } catch (error) {
                     console.error("Error when creating Chart, Please refresh the page, Error Message : " + error)
                 }
             },
+            updateData(graph,graph_data) {
+                graph.data.datasets[0].data = graph_data.map(row => row.count)
+                graph.data.labels = graph_data.map(row => row.domain)
+                graph.update()
+            },
             async updateChart() {
                 await this.getTopDomain()
-                all_domain_graph.data.datasets[0].data = this.all_domain.map(row => row.count)
-                all_domain_graph.data.labels = this.all_domain.map(row => row.domain)
-                all_domain_graph.update()
-                success_domain_graph.data.datasets[0].data = this.success_domain.map(row => row.count)
-                success_domain_graph.data.labels = this.success_domain.map(row => row.domain)
-                success_domain_graph.update()
-                blocked_domain_graph.data.datasets[0].data = this.blocked_domain.map(row => row.count)
-                blocked_domain_graph.data.labels = this.blocked_domain.map(row => row.domain)
-                blocked_domain_graph.update()
-                failed_domain_graph.data.datasets[0].data = this.failed_domain.map(row => row.count)
-                failed_domain_graph.data.labels = this.failed_domain.map(row => row.domain)
-                failed_domain_graph.update()
+                
+                if (all_domain_graph != null){
+                    if (this.all_domain.length > 0) this.updateData(all_domain_graph,this.all_domain)
+                    else{
+                        all_domain_graph.destroy()
+                        all_domain_graph = null
+                    }
+                }
+                else all_domain_graph = await this.generate_chart("all_domain_stats",this.all_domain)
+
+                if (success_domain_graph != null){
+                    if (this.success_domain.length > 0) this.updateData(success_domain_graph,this.success_domain)
+                    else {
+                        success_domain_graph.destroy()
+                        success_domain_graph = null
+                    }
+                }
+                else success_domain_graph = await this.generate_chart("success_domain_stats",this.success_domain)
+
+                if (blocked_domain_graph != null){
+                    if (this.blocked_domain.length > 0) this.updateData(blocked_domain_graph,this.blocked_domain)
+                    else{
+                        blocked_domain_graph.destroy()
+                        blocked_domain_graph = null
+                    }
+                }
+                else blocked_domain_graph = await this.generate_chart("blocked_domain_stats",this.blocked_domain)
+
+                if (failed_domain_graph != null){
+                    if (this.failed_domain.length > 0) this.updateData(failed_domain_graph,this.failed_domain)
+                    else{
+                        failed_domain_graph.destroy()
+                        failed_domain_graph = null
+                    }
+                }
+                else failed_domain_graph = await this.generate_chart("failed_domain_stats",this.failed_domain)
             }
         }
     }

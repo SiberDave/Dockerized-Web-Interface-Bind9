@@ -1,6 +1,6 @@
 <template>
     <div class="w-full h-full">
-      <h1 class="text-2xl">Custom Domain List</h1>
+      <h1 class="text-2xl font-semibold">Custom Domain List</h1>
       <CustomDomainForm/>
       <CustomDomainComponentVue ref="customDomainTable" />
     </div>

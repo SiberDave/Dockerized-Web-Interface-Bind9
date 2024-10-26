@@ -89,11 +89,13 @@ router.beforeEach((to, from, next) => {
     window.location.href = "/login"
   }
   else if (to.meta.islogin && userCookie){
-    next(from.path)
     if (to.path == "/logout"){
-      document.cookie = `${userCookie};max-age=0`
-      window.location.href = "/login"
+      if (confirm("Are you sure you want to log out from this site?")){
+        document.cookie = `${userCookie};max-age=0`
+        window.location.href = "/login"
+      }
     }
+    else next(from.path)
   }
   else{
     next()

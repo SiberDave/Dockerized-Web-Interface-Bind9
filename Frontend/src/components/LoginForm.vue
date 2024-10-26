@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="text-xl pb-5 text-center">
+        <div class="text-4xl font-bold pb-5 text-center">
             Web Interface BIND9 login
         </div>
         <div class="w-full flex flex-row justify-center">

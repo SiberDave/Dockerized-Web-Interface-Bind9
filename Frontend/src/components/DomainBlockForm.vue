@@ -7,24 +7,24 @@
                 <form @submit.prevent="add_domain_block" method="post">
                     <div class="w-full grid grid-cols-3">
                         <div class="w-full col-span-3 flex">
-                            <div class="w-1/2">
+                            <div class="w-full">
                                 <label for="domain_field" class="text-s">Domain</label><br>
-                                <input type="text" v-model="domaindata.domain" id="domain_field" class="w-4/5">
-                            </div>
-                            <div class="w-1/2">
-                                <label for="type" class="text-s">Block Type</label>
-                                <select v-model="domaindata.type" id="type" class="w-4/5 text-center">
-                                    <option value="ads">ADS</option>
-                                    <option value="dns">Domain</option>
-                                </select>
+                                <input type="text" v-model="domaindata.domain" id="domain_field" class="w-4/5 px-1">
                             </div>
                         </div>
                         <div class="w-full col-span-3 flex flex-col justify-center items-center">
-                            <label for="type" class="text-s">Record Type</label>
-                            <select v-model="domaindata.record" id="type" class="w-2/5 text-center">
+                            <label for="record" class="text-s">Record Type</label>
+                            <select v-model="domaindata.record" id="record" class="w-4/5 py-1 text-center">
                                 <option value="A">A</option>
                                 <option value="AAAA">AAAA</option>
                                 <option value="CNAME">CNAME</option>
+                            </select>
+                        </div>
+                        <div class="w-full col-span-3 flex flex-col justify-center items-center">
+                            <label for="types" class="text-s">Block Type</label>
+                            <select v-model="domaindata.type" id="types" class="w-4/5 py-1 text-center">
+                                <option value="ads">ADS</option>
+                                <option value="dns">Domain</option>
                             </select>
                         </div>
                         <div class="col-span-3 py-3">
