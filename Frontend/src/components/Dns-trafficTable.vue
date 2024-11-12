@@ -272,7 +272,7 @@
                     ip: ip,
                     blocks: block.toString()
                 }
-                if (confirm("Are you sure you want to block this client ip?")){
+                if (confirm("Are you sure you want to allow this client ip?")){
                     axios.post(`http://${process.env.VUE_APP_HOST_API}:3000/add-ip-block`, clientData)
                     .then(response => {
                         alert(response.data)
