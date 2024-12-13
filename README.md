@@ -20,7 +20,7 @@ Bind9 RPZ monitor made with
 ## Ports Used
 - 3000 (Backend node.js)
 - 8080 (Frontend)
-- 10053 (dnscrypt-proxy)
+- 5053 (dnscrypt-proxy)
 - 8443 (DoH Bind9)
 - 53/UDP (Bind9)
 
