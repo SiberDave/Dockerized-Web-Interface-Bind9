@@ -1,5 +1,14 @@
-# dockerize-bind9-rpz-monitor-backend
-Bind9 RPZ monitor made with 
+# Web Interface Bind9
+
+Web Interface for Bind9 which allow user to build bind9 dns server and the web interface for it and supporting on some feature such as:
+- Domain Block using RPZ.
+- Client Whitelisting (Default deny all).
+- Dns Logging.
+- Custom Domain.
+- Accept both Dns-over-Https and DNS Connection.
+
+
+# Web Interface Bind9 Components 
 - Vue.js
 - Express.js
 - Node.js
@@ -13,9 +22,6 @@ Bind9 RPZ monitor made with
 - docker
 - docker-compose
 
-## OS Tested
-
-- Ubuntu 20.04 or Below
 
 ## Ports Used
 - 3000 (Backend node.js)
@@ -37,5 +43,5 @@ Bind9 RPZ monitor made with
 5. Add ip to the Allowed Client menu on website to allow device to connect to dns server.
 
 ## Troubleshoot
-Q: Issue on network <br/>
-A: change the ip subnet of docker network on docker-compose.yaml also the ip of each service and additional host for dns_backend service
+Q: Issue on network overlapping <br/>
+A: Please change the ip subnet of docker network on docker-compose.yaml also the ip for each service and additional host for dns_backend service
