@@ -5,7 +5,6 @@ record=$3
 address="0.0.0.0"
 
 sh -c "sed -i '/^\b$pattern\b.*\b$record\b/d' $path"
-sh -c "sed -i '/^*.\b$pattern\b.*\b$record\b/d' $path"
 
 file_contents=$(cat $path)
 

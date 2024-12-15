@@ -25,8 +25,6 @@ function add_domain()
 domain_status=$(add_domain /etc/bind/$filename $domain)
 
 if [ "$domain_status" == "success" ]; then
-    add_domain /etc/bind/$filename *.$domain > /dev/null
-    rndc reload > /dev/null
     echo "Domain Successfully Added"
 elif [ "$domain_status" == "failed" ]; then 
     echo "Domain Already Registered."
