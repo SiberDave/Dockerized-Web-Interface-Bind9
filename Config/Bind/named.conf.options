@@ -50,7 +50,7 @@ options {
 	listen-on port 8443 tls local-tls http local-http-server {any;};
 	listen-on-v6 port 8443 tls local-tls http local-http-server {any;};
 
-	response-policy { zone "ads.rpz.zone"; zone "blocked.rpz.zone"; zone "custom.zone";};
+	response-policy { zone "blocked.rpz.zone"; zone "custom.zone";};
 	
 	dump-file  "/var/log/bind/cache_dump.db";
 	statistics-file "/var/log/bind/bind.stats";

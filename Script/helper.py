@@ -64,5 +64,13 @@ def add_block(domain,path,type):
     file.write(string_domain)
     file.close()
 
-            
+# List domain on the file.
+def list_block(path):
+    file = catch_content(path,"r")
+    contents = file.read().split('\n')
+    for line in contents:
+        match = re.match(r"\w",line)
+        if match:
+            temp_text = line.split('\t')
+            print(temp_text[0]+","+temp_text[2]+","+temp_text[4].split('#')[1])
 

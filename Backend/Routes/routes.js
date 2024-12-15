@@ -18,7 +18,7 @@ module.exports = function (app) {
     })
 
     app.get('/list-dns-block', (req,res) => {
-        const data = execSync('/home/webScript/Blocked_Domain_list.sh')
+        const data = execSync('/home/webScript/Blocked_Domain_list.py')
         var decoder = new StringDecoder('utf8')
         let list = decoder.write(data).split('\n')
         list = list.filter(value => Object.keys(value).length > 0)
@@ -27,8 +27,8 @@ module.exports = function (app) {
 
     app.post('/add-dns-block', (req,res) => {
         var { domain, type, record } = req.body;
-        var dns_type = type === 'ads' ? 'db.ads.rpz' : 'db.blocked.rpz'
-        const data = execSync('/home/webScript/Blocked_Domain_add.sh '+ dns_type + ' ' + domain + ' ' + record)
+        // var dns_type = type === 'ads' ? 'db.ads.rpz' : 'db.blocked.rpz'
+        const data = execSync('/home/webScript/Blocked_Domain_add.py '+ domain + " Uncategorized")
         var decoder = new StringDecoder('utf8')
         res.json(decoder.write(data))
     })
