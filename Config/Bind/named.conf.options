@@ -56,13 +56,6 @@ options {
 	statistics-file "/var/log/bind/bind.stats";
 };
 
-zone "ads.rpz.zone" {
-	type master;
-	file "/etc/bind/db.ads.rpz";
-	allow-query { any; };
-	allow-transfer { none; };
-};
-
 zone "blocked.rpz.zone" {
 	type master;
 	file "/etc/bind/db.blocked.rpz";

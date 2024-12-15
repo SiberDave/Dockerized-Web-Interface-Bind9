@@ -36,8 +36,7 @@ RUN /home/webScript/Generate_DOH_SSL.sh 127.0.0.1
 RUN sed -i '/\/var\/cache\/bind\/ rw,/a \ \ \/var/log/bind/** rw,' "/etc/apparmor.d/usr.sbin.named" \ 
   && sed -i '/\/var\/cache\/bind\/ rw,/a \ \ \/var/log/bind/ rw,' "/etc/apparmor.d/usr.sbin.named" 
 
-RUN cp /etc/bind/db.empty /etc/bind/db.ads.rpz \ 
-  | cp /etc/bind/db.empty /etc/bind/db.blocked.rpz \
+RUN  cp /etc/bind/db.empty /etc/bind/db.blocked.rpz \
   | cp /etc/bind/db.empty /etc/bind/db.custom.dns \
   | cp /home/back_api/example.env /home/back_api/.env \
   && sed -i -e "s|LOG_PATH='.*'|LOG_PATH='/home/back_api/dns-log'|" "/home/back_api/.env"
