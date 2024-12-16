@@ -15,7 +15,7 @@
                             <tr>
                                 <th class="table-cell">Domain</th>
                                 <th class="table-cell">DNS Types</th>
-                                <th class="table-cell">Block Types</th>
+                                <th class="table-cell">Notes</th>
                                 <th class="table-cell">Actions</th>
                             </tr>
                         </thead>

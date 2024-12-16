@@ -2,6 +2,7 @@
 
 import requests
 import re
+import subprocess
 
 # Get the hosts file from network and parse it to csv
 def parse_hosts_file(url):
@@ -35,20 +36,24 @@ def parse_hosts_file(url):
             })
     return domains
 
+# Refresh Bind Config
+def bind_refresh_option():
+    subprocess.run(["rndc", "reload > /dev/null"])
+
 # Get file descriptor
 def catch_content(path,mode):
     file = open(path, mode)
     return file
 
 # Search for the domain on folder for the domain.
-def search_for_string(text,path):
+def search_for_string(text,path,type):
     domain_exist = False
     domain_on_file = False
     file = catch_content(path,"r")
     contents = file.read().split('\n')
     file.close()
     for line in contents:
-        match = re.match(r"^" + text + r"\tIN*",line)
+        match = re.match(r"^" + text + r"\tIN\t" + type + "\t",line)
         if match:
             domain_exist = True
             continue
@@ -58,14 +63,15 @@ def search_for_string(text,path):
     return domain_on_file
 
 # Add domain on the file.
-def add_block(domain,path,type):
+def add_domain_block(domain,path,type,category):
     file = catch_content(path,"a")
-    string_domain = "\n" + domain + "\tIN\tA\t0.0.0.0\t#" + type
+    string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\t#" + category + "\n"
     file.write(string_domain)
     file.close()
+    bind_refresh_option()
 
 # List domain on the file.
-def list_block(path):
+def list_domain_block(path):
     file = catch_content(path,"r")
     contents = file.read().split('\n')
     for line in contents:
@@ -73,4 +79,19 @@ def list_block(path):
         if match:
             temp_text = line.split('\t')
             print(temp_text[0]+","+temp_text[2]+","+temp_text[4].split('#')[1])
+    bind_refresh_option()
 
+def delete_domain_block(domain,path,type):
+    file = catch_content(path,"r")
+    lines = file.readlines()
+    new_array = []
+    for line in lines:
+        match = re.match(r"^" + domain + r"\tIN\t" + type + "\t",line)
+        if match == None:
+            new_array.append(line)
+    file = catch_content(path, "w")
+    file.writelines(new_array)
+    file.close()
+    bind_refresh_option()
+    print("Domain " + domain + " Successfully Deleted!")
+    
