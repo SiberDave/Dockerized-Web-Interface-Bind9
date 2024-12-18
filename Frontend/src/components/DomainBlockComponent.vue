@@ -2,7 +2,7 @@
     <div>
         <div class="w-full grid grid-cols-5">
             <div class="w-full"/>
-            <div class="col-span-3">
+            <div class="col-span-3" v-show="table">
                 <div>
                     <div class="p-5">
                         <label class="text-xl" for="searchquery">Search : </label>
@@ -51,7 +51,10 @@
                     </div>
                 </div>
             </div>
-            <div class="w-full"/>
+            <br/>
+            <div class="w-full h-full flex flex-column justify-center pt-10 loader-container" v-show="isload">
+                <div class="loader"/>
+            </div>
         </div>
     </div>
 </template>
@@ -71,6 +74,8 @@
                 searchQuery: '',
                 prevSearchQuery: '',
                 totalfilterdata: 0,
+                isload: true,
+                table: false
             }
         },
         computed: {
@@ -114,14 +119,15 @@
         created() {
             this.fetchData()
         },
-        mounted() {
-        },
+        mounted() {},
         methods: {
             async fetchData() {
                 try {
                     // Replace with your API endpoint
                     const response = await axios.get(`http://${process.env.VUE_APP_HOST_API}:3000/list-dns-block`);
                     this.ListBlockedDomain = response.data
+                    this.isload = false
+                    this.table = true
                 } catch (error) {
                     this.error = "Error fetching data";
                     console.error("There was an error fetching the data", error);
@@ -138,7 +144,6 @@
                 }
                 else{
                     const filtered = this.ListBlockedDomain.filter((data) => {
-                        // console.log(data)
                         return (
                             data.toLowerCase().includes(this.searchQuery.toLowerCase())
                         );
@@ -188,6 +193,20 @@
                         alert(error)
                     })
                 }
+            },
+            checkloading(){
+                if (this.isload){
+                    this.isload = false
+                    this.table = true
+                }
+                else { 
+                    this.isload = true 
+                    this.table = false
+                }
+                // try {
+                // } catch (error) {
+                //     console.log(error)
+                // }
             }
         }
     }
@@ -196,6 +215,29 @@
 
     label{
         padding-right: calc(50%);
+    }
+
+    .loader{
+        border: 16px solid #f3f3f3;
+        border-radius: 50%;
+        border-top: 16px solid blue;
+        border-right: 16px solid green;
+        border-bottom: 16px solid red;
+        border-left: 16px solid pink;
+        width: 120px;
+        height: 120px;
+        -webkit-animation: spin 2s linear infinite;
+        animation: spin 2s linear infinite;
+    }
+
+    @-webkit-keyframes spin {
+        0% { -webkit-transform: rotate(0deg); }
+        100% { -webkit-transform: rotate(360deg); }
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
     }
 
 </style>

@@ -25,6 +25,13 @@ module.exports = function (app) {
         res.json(list)
     })
 
+    app.post('/add-batch-dns-block',(req,res) => {
+        var {url, record} = req.body
+        const data = execSync('/home/webScript/Batch_Insert_Blocked_Domain.py ' + url + " " + record)
+        var decoder = new StringDecoder('utf-8')
+        res.json(decoder.write(data))
+    })
+
     app.post('/add-dns-block', (req,res) => {
         var { domain, note, record } = req.body;
         const data = execSync('/home/webScript/Blocked_Domain_add.py '+ domain + " " + '"' + note + '"' + " " + record)

@@ -8,15 +8,23 @@ import subprocess
 def parse_hosts_file(url):
     domains = []
     current_section = None
+    right_file = False
 
-    response = requests.get(url)
+    try:
+         response = requests.get(url)
+    except:
+        return "Error1"
+
+
     response.raise_for_status()
 
     lines = response.text.split('\n')
 
     for line in lines:
+        checkfile = re.match('^0.0.0.0.',line)
         section_match = re.match(r'^#<(\w.+)>$',line)
         section_end_match = re.match(r'#</(\w.+)>$',line)
+
         if section_match:
             current_section = section_match.group(1)
             continue
@@ -34,6 +42,15 @@ def parse_hosts_file(url):
                 'ip' : "0.0.0.0",
                 'category' : current_section or 'Uncategorized'
             })
+
+        if checkfile:
+            right_file = True
+            continue
+        else:
+            break
+    
+    if not right_file:
+        return False
     return domains
 
 # Refresh Bind Config
@@ -62,7 +79,7 @@ def search_for_string(text,path,type):
             break
     return domain_on_file
 
-# Add domain on the file.
+# Add domain on the bind config file.
 def add_domain_block(domain,path,type,category):
     file = catch_content(path,"a")
     string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\t#" + category + "\n"
@@ -70,7 +87,7 @@ def add_domain_block(domain,path,type,category):
     file.close()
     bind_refresh_option()
 
-# List domain on the file.
+# List domain on the bind config file.
 def list_domain_block(path):
     file = catch_content(path,"r")
     contents = file.read().split('\n')
@@ -81,6 +98,7 @@ def list_domain_block(path):
             print(temp_text[0]+","+temp_text[2]+","+temp_text[4].split('#')[1])
     bind_refresh_option()
 
+# Delete domain on the bind config file
 def delete_domain_block(domain,path,type):
     file = catch_content(path,"r")
     lines = file.readlines()
