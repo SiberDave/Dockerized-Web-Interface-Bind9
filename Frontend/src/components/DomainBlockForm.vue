@@ -20,12 +20,6 @@
                                 <option value="CNAME">CNAME</option>
                             </select>
                         </div>
-                        <div class="w-full col-span-3 flex flex-col justify-center items-center">
-                            <div class="w-full">
-                                <label for="note_field" class="text-s">Note</label><br>
-                                <input type="text" v-model="domaindata.note" id="note_field" class="w-4/5 px-1">
-                            </div>
-                        </div>
                         <div class="col-span-3 py-3">
                             <button class="border bg-green-400 px-2 py-1 " type="submit">Submit</button>
                         </div>
@@ -69,8 +63,7 @@
             return {
                 domaindata: {
                     domain: '',
-                    record:'A',
-                    note: ""
+                    record:'A'
                 },
                 batchurl: {
                     url: '',

@@ -55,7 +55,7 @@ def parse_hosts_file(url):
 
 # Refresh Bind Config
 def bind_refresh_option():
-    subprocess.run(["rndc", "reload > /dev/null"])
+    var = subprocess.run(["/usr/sbin/rndc","reload"],stdout=subprocess.DEVNULL)
 
 # Get file descriptor
 def catch_content(path,mode):
@@ -70,7 +70,10 @@ def search_for_string(text,path,type):
     contents = file.read().split('\n')
     file.close()
     for line in contents:
-        match = re.match(r"^" + text + r"\tIN\t" + type + "\t",line)
+        if (re.match(r"\*.",text)):
+            match = re.match(r"^\*." + text + r"\tIN\t" + type + "\t",line)
+        else:
+            match = re.match(r"^" + text + r"\tIN\t" + type + "\t",line)
         if match:
             domain_exist = True
             continue
@@ -80,10 +83,15 @@ def search_for_string(text,path,type):
     return domain_on_file
 
 # Add domain on the bind config file.
-def add_domain_block(domain,path,type,category):
+def add_domain_block(domain,path,type):
     file = catch_content(path,"a")
-    string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\t#" + category + "\n"
-    file.write(string_domain)
+    string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\n"
+    is_www = re.match(r"^www",domain)
+    if is_www == None:
+        star_string_domain = "*." + domain + "\tIN\t" + type + "\t0.0.0.0\n"
+        file.write(string_domain + "\n" + star_string_domain)
+    else:
+        file.write(string_domain)
     file.close()
     bind_refresh_option()
 
@@ -93,9 +101,10 @@ def list_domain_block(path):
     contents = file.read().split('\n')
     for line in contents:
         match = re.match(r"\w",line)
-        if match:
+        match_star = re.match(r"^\*.\w",line)
+        if match or match_star:
             temp_text = line.split('\t')
-            print(temp_text[0]+","+temp_text[2]+","+temp_text[4].split('#')[1])
+            print(temp_text[0]+","+temp_text[2])
     bind_refresh_option()
 
 # Delete domain on the bind config file
@@ -104,7 +113,10 @@ def delete_domain_block(domain,path,type):
     lines = file.readlines()
     new_array = []
     for line in lines:
-        match = re.match(r"^" + domain + r"\tIN\t" + type + "\t",line)
+        if (re.match(r"\*",domain)):
+            match = re.match(r"^\*." + str(domain) + r"\tIN\t" + type + "\t",line)
+        else:
+            match = re.match(r"^" + str(domain) + r"\tIN\t" + type + "\t",line)
         if match == None:
             new_array.append(line)
     file = catch_content(path, "w")

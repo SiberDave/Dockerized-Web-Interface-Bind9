@@ -15,7 +15,6 @@
                             <tr>
                                 <th class="table-cell">Domain</th>
                                 <th class="table-cell">DNS Types</th>
-                                <th class="table-cell">Notes</th>
                                 <th class="table-cell">Actions</th>
                             </tr>
                         </thead>
@@ -23,7 +22,6 @@
                             <tr class="table-row w-full" v-for="data in filteredPageData" :key="data">
                                 <td class="table-cell w-50">{{ data.split(',')[0] }}</td>
                                 <td class="table-cell w-50">{{ data.split(',')[1] }}</td>
-                                <td class="table-cell w-50">{{ data.split(',')[2] }}</td>
                                 <td class="table-cell w-50">
                                     <button id="deletebutton" @click="remove_block(data.split(',')[0],data.split(',')[2],data.split(',')[1])" class="px-2 bg-red-500 my-1 text-white rounded-md">Delete</button>
                                 </td>

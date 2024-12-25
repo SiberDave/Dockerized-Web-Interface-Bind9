@@ -33,8 +33,8 @@ module.exports = function (app) {
     })
 
     app.post('/add-dns-block', (req,res) => {
-        var { domain, note, record } = req.body;
-        const data = execSync('/home/webScript/Blocked_Domain_add.py '+ domain + " " + '"' + note + '"' + " " + record)
+        var { domain, record } = req.body;
+        const data = execSync('/home/webScript/Blocked_Domain_add.py '+ domain + " " + record)
         var decoder = new StringDecoder('utf8')
         res.json(decoder.write(data))
     })
@@ -142,7 +142,7 @@ module.exports = function (app) {
                 let list_custom = decoder.write(data).split('\n')
                 list_custom = list_custom.filter(value => Object.keys(value).length > 0)
 
-                data = execSync('/home/webScript/list_blocked_domain.sh')
+                data = execSync('/home/webScript/Blocked_Domain_list.py')
                 let list_blocked = decoder.write(data).split('\n')
                 list_blocked = list_blocked.filter(value => Object.keys(value).length > 0)
                 list_blocked = [...new Set(list_blocked)]

@@ -27,7 +27,10 @@ else:
                 count_sukses+=1
         else:
             print("Host isn't 0.0.0.0")
+            success = False
             break
 
     if success:
         print(str(count_sukses) + " domain sudah sukses ditambahkan")
+    else:
+        print(str(count_sukses) + " domain sudah sukses ditambahkan, namun ada beberapa kesalahan")
