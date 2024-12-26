@@ -11,7 +11,7 @@ def parse_hosts_file(url):
     right_file = False
 
     try:
-         response = requests.get(url)
+        response = requests.get(url)
     except:
         return "Error1"
 
@@ -21,9 +21,12 @@ def parse_hosts_file(url):
     lines = response.text.split('\n')
 
     for line in lines:
-        checkfile = re.match('^0.0.0.0.',line)
+        checkfile = re.match('^0\.0\.0\.0.',line)
         section_match = re.match(r'^#<(\w.+)>$',line)
         section_end_match = re.match(r'#</(\w.+)>$',line)
+
+        if checkfile:
+            right_file = True
 
         if section_match:
             current_section = section_match.group(1)
@@ -42,12 +45,6 @@ def parse_hosts_file(url):
                 'ip' : "0.0.0.0",
                 'category' : current_section or 'Uncategorized'
             })
-
-        if checkfile:
-            right_file = True
-            continue
-        else:
-            break
     
     if not right_file:
         return False
@@ -87,11 +84,10 @@ def add_domain_block(domain,path,type):
     file = catch_content(path,"a")
     string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\n"
     is_www = re.match(r"^www",domain)
+    file.write(string_domain)
     if is_www == None:
         star_string_domain = "*." + domain + "\tIN\t" + type + "\t0.0.0.0\n"
-        file.write(string_domain + "\n" + star_string_domain)
-    else:
-        file.write(string_domain)
+        file.write(star_string_domain)
     file.close()
     bind_refresh_option()
 
@@ -104,7 +100,10 @@ def list_domain_block(path):
         match_star = re.match(r"^\*.\w",line)
         if match or match_star:
             temp_text = line.split('\t')
-            print(temp_text[0]+","+temp_text[2])
+            try:
+                print(str(temp_text[0])+","+str(temp_text[2]))
+            except:
+                continue
     bind_refresh_option()
 
 # Delete domain on the bind config file
