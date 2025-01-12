@@ -130,10 +130,10 @@
         watch: {
             selectedcat() {
                 this.invokeFirst()
-                this.getdata()
+                this.checkval()
             },
             currentpage() {
-                this.getdata()
+                this.checkval()
             }
         },
         methods: {
@@ -170,10 +170,10 @@
             async fetchData() {
                 try {
                     this.loading = true
-                    this.getdata()
+                    this.checkval()
                     setInterval(() => {
                         this.loading = true
-                        this.getdata()
+                        this.checkval()
                     }, 60000);
                      
                 } catch (error) {
@@ -244,7 +244,7 @@
                 try {
                     // Replace with your API endpoint
                     this.isrefresh = true
-                    this.getdata()
+                    this.checkval()
                     this.isrefresh = false
                 } catch (error) {
                     this.error = "Error fetching data";
