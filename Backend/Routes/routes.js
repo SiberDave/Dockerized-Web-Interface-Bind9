@@ -134,7 +134,7 @@ module.exports = function (app) {
 
             readerStream.on('data', (chunk) => {
                 let datas = chunk.split('\n')
-            
+
                 datas = datas.filter(data => data.length > 0)
 
                 let data = execSync('/home/webScript/list_custom_domain.sh')
@@ -146,7 +146,17 @@ module.exports = function (app) {
                 let list_blocked = decoder.write(data).split('\n')
                 list_blocked = list_blocked.filter(value => Object.keys(value).length > 0)
                 list_blocked = [...new Set(list_blocked)]
-            
+
+		        data = execSync('/home/webScript/Allow_Client_list.sh')
+                let temp_allowed = decoder.write(data).split('\n')
+                temp_allowed = temp_allowed.filter(value => Object.keys(value).length > 0)
+                let list_allowed = []
+                for(const allowed of temp_allowed){
+                    list_allowed.push(allowed.split("/")[0].split('\t')[1])
+                }
+
+                console.log(list_allowed)
+
                 for (const data of datas){
                     let array_values = data.split(' ')
                     let type = array_values[2].toString().replace(':','')
@@ -187,7 +197,12 @@ module.exports = function (app) {
                     }
 
                     if (type == "rpz" && list_custom.includes(query)){}
-                    else if(type == "queries" && list_blocked.includes(query)){}
+                    else if(type == "queries"){
+                        if (list_blocked.includes(query)){}
+                        else if (list_allowed.includes(String(log.ip_source))){
+                            dump.push(log)
+                        }
+                    }
                     else{
                         dump.push(log)
                     }
