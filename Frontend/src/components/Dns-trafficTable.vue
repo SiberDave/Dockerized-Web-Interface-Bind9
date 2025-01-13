@@ -60,8 +60,8 @@
                                 <td class="table-cell py-0.5 text-xs ">
                                     <div class="flex flex-row justify-center">
                                         <div class="w-4/5 grid grid-cols-1 space-y-1 py-1">
-                                            <button class="w-full whitespace-pre-line break-all mx-0.5 py-1 bg-green-700 text-white rounded-md" @click="add_domain_block(data.domain,data.dns_type)" >Domain</button>
-                                            <button class="w-full whitespace-pre-line break-all mx-0.5 py-1 bg-blue-700 text-white rounded-md" @click="add_client_block(data.ip_source)">Client</button>
+                                            <button v-if="data.dns_type != 'PTR'" class="w-full whitespace-pre-line break-all mx-0.5 py-1 bg-green-700 text-white rounded-md" @click="add_domain_block(data.domain,data.dns_type)" >Domain</button>
+                                            <button v-if="data.dns_type != 'PTR'" class="w-full whitespace-pre-line break-all mx-0.5 py-1 bg-blue-700 text-white rounded-md" @click="add_client_block(data.ip_source)">Client</button>
                                         </div>
                                     </div>
                                 </td>

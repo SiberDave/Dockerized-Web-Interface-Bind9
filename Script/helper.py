@@ -81,12 +81,17 @@ def search_for_string(text,path,type):
 
 # Add domain on the bind config file.
 def add_domain_block(domain,path,type):
+    ip_address="0.0.0.0"
     file = catch_content(path,"a")
-    string_domain = domain + "\tIN\t" + type + "\t0.0.0.0\n"
+    if type == "AAAA":
+        ip_address="::"
+    elif type == "HTTPS":
+        type = "A"
+    string_domain = domain + "\tIN\t" + type + "\t" + ip_address + "\n"
     is_www = re.match(r"^www",domain)
     file.write(string_domain)
     if is_www == None:
-        star_string_domain = "*." + domain + "\tIN\t" + type + "\t0.0.0.0\n"
+        star_string_domain = "*." + domain + "\tIN\t" + type + "\t" + ip_address + "\n"
         file.write(star_string_domain)
     file.close()
     bind_refresh_option()
